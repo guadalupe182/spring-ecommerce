@@ -3,6 +3,8 @@ package com.ecommerce.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
+import java.util.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,8 @@ import com.ecommerce.model.DetalleOrden;
 import com.ecommerce.model.Orden;
 import com.ecommerce.model.Producto;
 import com.ecommerce.model.Usuario;
+import com.ecommerce.service.IDetalleOrdenService;
+import com.ecommerce.service.IOrdenService;
 import com.ecommerce.service.IUsuarioService;
 import com.ecommerce.service.ProductoService;
 
@@ -39,6 +43,12 @@ public class HomeController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+	private IOrdenService ordenService;
+	
+	@Autowired
+	private IDetalleOrdenService detalleOrdenService;
 
 	@GetMapping("")
 	public String home(Model model) {
@@ -136,5 +146,32 @@ public class HomeController {
 		
 		return "/usuario/resumenorden";
 	}
+	
+	//guadar la orden
+	 @GetMapping("/saveOrder")
+	 public String saveOrder(){
+		 Date fechaCreacion = new Date();
+		 orden.setFechaCreacion(fechaCreacion);
+		 orden.setNumero(ordenService.generarNumeroOrden());
+		 
+		 //usuario 
+		Usuario usuario = usuarioService.findById(1).get();
+		
+		orden.setUsuario(usuario);
+		ordenService.save(orden);
+		
+		//guardar Detalles
+		for(DetalleOrden dt:detalles) {
+			dt.setOrden(orden);
+			detalleOrdenService.save(dt);
+		}
+		
+		//limpiar lista y orden
+		orden = new Orden();
+		detalles.clear();
+		
+		 
+		 return "redirect:/";
+	 }
 
 }
