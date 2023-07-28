@@ -3,6 +3,8 @@ package com.ecommerce.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -25,6 +27,8 @@ import com.ecommerce.service.IDetalleOrdenService;
 import com.ecommerce.service.IOrdenService;
 import com.ecommerce.service.IUsuarioService;
 import com.ecommerce.service.ProductoService;
+
+import jakarta.persistence.MapsId;
 
 @Controller
 @RequestMapping("/")
@@ -169,9 +173,15 @@ public class HomeController {
 		//limpiar lista y orden
 		orden = new Orden();
 		detalles.clear();
-		
-		 
 		 return "redirect:/";
+	 }
+	 
+	 @PostMapping("/search")
+	 public String searchProduct(@RequestParam String nombre, Model model) { //pasando string desde la barra Buscar
+		 log.info("nombre del producto:{}", nombre);
+		 List<Producto> productos = productoService.findAll().stream().filter(p -> p.getNombre().contains(nombre)).collect(Collectors.toList());
+		 model.addAttribute("productos", productos);
+		 return "usuario/home";
 	 }
 
 }
