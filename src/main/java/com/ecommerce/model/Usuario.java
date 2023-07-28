@@ -21,7 +21,7 @@ public class Usuario {
 	private String direccion;
 	private String telefono;
 	private String tipo; //tipo de usuario
-	private String pássword;
+	private String password;
 	
 	@OneToMany(mappedBy = "usuario")
 	private List<Producto> productos;
@@ -33,7 +33,7 @@ public class Usuario {
 		
 	}
 	public Usuario(Integer id, String nombre, String username, String email, String direccion, String telefono,
-			String tipo, String pássword) {
+			String tipo, String password) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -42,7 +42,7 @@ public class Usuario {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.tipo = tipo;
-		this.pássword = pássword;
+		this.password = password;
 	}
 	public Integer getId() {
 		return id;
@@ -86,11 +86,11 @@ public class Usuario {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public String getPássword() {
-		return pássword;
+	public String getPassword() {
+		return password;
 	}
-	public void setPássword(String pássword) {
-		this.pássword = pássword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public List<Producto> getProductos() {
@@ -102,7 +102,7 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", tipo=" + tipo + ", pássword=" + pássword
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", tipo=" + tipo + ", password=" + password
 				+ "]";
 	}
 	
