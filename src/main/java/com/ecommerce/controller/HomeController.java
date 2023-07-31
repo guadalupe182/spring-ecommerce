@@ -3,10 +3,10 @@ package com.ecommerce.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
+
 import java.util.stream.Collectors;
 import java.util.Date;
-import java.util.Iterator;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ import com.ecommerce.service.IOrdenService;
 import com.ecommerce.service.IUsuarioService;
 import com.ecommerce.service.ProductoService;
 
-import jakarta.persistence.MapsId;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
