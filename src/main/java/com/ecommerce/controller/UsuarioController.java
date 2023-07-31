@@ -1,5 +1,6 @@
 package com.ecommerce.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ecommerce.model.Orden;
 import com.ecommerce.model.Usuario;
+import com.ecommerce.service.IOrdenService;
 import com.ecommerce.service.IUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +28,10 @@ public class UsuarioController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+	private IOrdenService ordenService;
+	
 	
 	@GetMapping("/registro")
 	public String create() {
@@ -69,6 +76,11 @@ public class UsuarioController {
 	@GetMapping("/compras")
 	public String obtenerCompras(Model model, HttpSession session) {
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
+		Usuario usuario = usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
+		List<Orden> ordenes = ordenService.findByUsuario(usuario);
+		
+		model.addAttribute("ordenes", ordenes);
+		
 		
 		return "usuario/compras";
 	}
